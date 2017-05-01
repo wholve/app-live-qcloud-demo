@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>直播间</title>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+}
+</style>
+
+</head>
+<body>
+	<div id="id_test_video" style="width: 100%; height: auto;"></div>
+	<script src="//imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer.js"
+		charset="utf-8"></script>
+	<script>
+		(function() {
+			function getParams(name) {
+				var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null) {
+					return decodeURIComponent(r[2]);
+				}
+				return null;
+			}
+			var rtmp = getParams('rtmp'), flv = getParams('flv'), m3u8 = getParams('m3u8'), mp4 = getParams('mp4'), live = (getParams('live') == 'true' ? true
+					: false), coverpic = getParams('coverpic'), width = getParams('width'), height = getParams('height'), autoplay = (getParams('autoplay') == 'true' ? true
+					: false);
+			/**
+			 * 视频类型播放优先级
+			 * mobile ：m3u8>mp4
+			 * PC ：RTMP>flv>m3u8>mp4
+			 */
+			var options = {
+				rtmp : rtmp,
+				flv : flv,
+				flv_hd : flv,
+				flv_sd : flv,
+				m3u8 : m3u8
+						|| 'http://2527.vod.myqcloud.com/2527_b3907044441c11e6a46d294f954f93eb.f230.av.m3u8',
+				m3u8_hd : m3u8
+						|| 'http://2527.vod.myqcloud.com/2527_b3907044441c11e6a46d294f954f93eb.f230.av.m3u8',
+				m3u8_sd : m3u8
+						|| 'http://2527.vod.myqcloud.com/2527_b3907044441c11e6a46d294f954f93eb.f230.av.m3u8',
+				mp4 : mp4
+						|| 'http://2527.vod.myqcloud.com/2527_b3907044441c11e6a46d294f954f93eb.f30.mp4',
+				mp4_hd : 'http://2527.vod.myqcloud.com/2527_b3907044441c11e6a46d294f954f93eb.f20.mp4',
+				mp4_sd : 'http://2527.vod.myqcloud.com/2527_b3907044441c11e6a46d294f954f93eb.f20.mp4',
+				coverpic : coverpic
+						|| 'http://imgcache.qq.com/open/qcloud/video/share/img/back-img.png',
+				autoplay : autoplay ? true : false,
+				live : true,
+				width : width || '480',
+				height : height || '320',
+				wording : {
+					1002 : '即将直播，请稍等',
+					2032 : "请求视频失败，请检查网络~~",
+					2048 : "请求m3u8文件失败，可能是网络错误或者跨域问题~~"
+				},
+				listener : function(msg) {
+					// console.log('listener',msg);
+					if (msg.type == 'error') {
+						window.setTimeout(function() {
+							player.load();//进行重连
+						}, 5000);
+					}
+				}
+
+			};
+			var player = new TcPlayer('video-container', options);
+			window.qcplayer = player;
+		})();
+	</script>
+
+</body>
+</html>
