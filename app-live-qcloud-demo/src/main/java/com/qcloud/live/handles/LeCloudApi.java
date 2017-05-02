@@ -1,5 +1,6 @@
 package com.qcloud.live.handles;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -25,12 +26,14 @@ public class LeCloudApi {
 	}
 
 	@RequestMapping("create")
-	public String createLive(String activityName, String activityCategory, Date startTime, Date endTime,
-			String coverImgUrl, String description, int playMode, int liveNum, String codeRateTypes, int needRecord,
-			int needTimeShift, int needFullView, Model model) {
+
+	public String createLive(String activityName, Model model) {
+		Date startTime = new Date();
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DAY_OF_MONTH, 1);
+		Date endTime = c.getTime();
 		LeClouldHandle clouldHandle = new LeClouldHandle();
-		String activityId = clouldHandle.createLive(activityName, activityCategory, startTime, endTime, coverImgUrl,
-				description, playMode, liveNum, codeRateTypes, needRecord, needTimeShift, needFullView);
+		String activityId = clouldHandle.createLive(activityName, startTime, endTime, null, "测试" + c.getTime());
 		if (activityId != null && !"".equals(activityId)) {
 			model.addAttribute("activityId", activityId);
 		}

@@ -137,13 +137,12 @@ public class LeClouldHandle {
 	 *            是否全景观看 0：否 1：是。默认为0
 	 * @return activityId 活动ID
 	 */
-	public String createLive(String activityName, String activityCategory, Date startTime, Date endTime,
-			String coverImgUrl, String description, int playMode, int liveNum, String codeRateTypes, int needRecord,
-			int needTimeShift, int needFullView) {
+	public String createLive(String activityName, Date startTime, Date endTime,
+			String coverImgUrl, String description) {
 		String activityId = "";
 		try {
 			Map<String, String> params = getParamsForCreateLive(activityName, startTime, endTime, coverImgUrl,
-					activityName);
+					description);
 			HttpResponseModel model = doPost("lecloud.cloudlive.activity.create", "4.1", params);
 			ObjectMapper mapper = new ObjectMapper();
 			if (model.getCode() == 200) {
