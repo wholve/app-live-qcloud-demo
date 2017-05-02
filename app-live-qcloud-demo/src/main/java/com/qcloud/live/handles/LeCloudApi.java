@@ -26,7 +26,6 @@ public class LeCloudApi {
 	}
 
 	@RequestMapping("create")
-
 	public String createLive(String activityName, Model model) {
 		Date startTime = new Date();
 		Calendar c = Calendar.getInstance();
