@@ -3,7 +3,9 @@ package com.qcloud.live.handles;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
@@ -135,7 +137,7 @@ public class HttpUtils {
 
 			NameValuePair[] dataPairs = new NameValuePair[params.size()];
 			int i = 0;
-			for (Map.Entry<String, String> entry : params.entrySet()) {
+			for (Entry<String, String> entry : params.entrySet()) {
 				dataPairs[i] = new NameValuePair(entry.getKey(), entry.getValue());
 				i++;
 

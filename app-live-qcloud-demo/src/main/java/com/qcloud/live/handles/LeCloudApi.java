@@ -31,8 +31,8 @@ public class LeCloudApi {
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DAY_OF_MONTH, 1);
 		Date endTime = c.getTime();
-		LeClouldHandle clouldHandle = new LeClouldHandle();
-		String activityId = clouldHandle.createLive(activityName, startTime, endTime, null, "测试" + c.getTime());
+		LeCloudHandle clouldHandle = new LeCloudHandle();
+		String activityId = clouldHandle.createLive(activityName, startTime, endTime, null, "测试");
 		if (activityId != null && !"".equals(activityId)) {
 			model.addAttribute("activityId", activityId);
 		}
